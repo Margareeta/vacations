@@ -1,2 +1,34 @@
-1) Описать отношения между сущностями при помощи аннотаций jpa
-2) создать, через new applicationContext и запустить main
+Протестировать CRUD методы JPA repository
+springDataJpa почитать
+
+
+
+
+1) Описать отношения между сущностями при помощи аннотаций jpa +
+2) создать, через new applicationContext и запустить main +
+3) Вернуть toString (exclude) and debug again +
+
+3) Read about:
+Hibernate proxy object+
+Hibernate persistance bag (у Сабурова есть) +
+
+Lazy Initialization exception
+https://thorben-janssen.com/lazyinitializationexception/
+(StackOverFlow)
+Hibernate throws the LazyInitializationException when it needs to initialize a lazily fetched association to
+another entity without an active session context. That’s usually the case if you try to use an
+uninitialized association in your client application or web layer.
+ 2fix it
+  _________
+ Don’t use FetchType.EAGER
+ Avoid the Open Session in View anti-pattern
+ Don’t use hibernate.enable_lazy_load_no_trans
+
+You initialize all required associations when you load the entity using a LEFT JOIN FETCH clause
+or a @NamedEntityGraph or the EntityGraph API.
+
+You use a DTO (data transfer object = pojo-class) projection instead of entities. DTOs don’t support lazy loading,
+and you need to fetch all required information within your service layer.
+
+
+VacationDao+

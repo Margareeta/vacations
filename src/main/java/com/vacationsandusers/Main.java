@@ -1,12 +1,12 @@
 package com.vacationsandusers;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
-    public static void main(String[] args) {
-        ClassPathXmlApplicationContext context =
-                new ClassPathXmlApplicationContext("springContext.xml");
-        context.getBean("emf");
 
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class);
     }
 }

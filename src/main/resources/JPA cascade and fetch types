@@ -1,0 +1,25 @@
+Cascading:
+When we perform some action on the target entity, the same action will be applied to the associated entity.
+
+JPA Cascade types
+ALL - propagates all operations — including Hibernate-specific ones — from a parent to a child entity.
+PERSIST - propagates the persist operation from a parent to a child entity.
+When we save the person entity, the address entity will also get saved.
+MERGE - The merge operation copies the state of the given object onto the persistent object with the same identifier.
+propagates the merge operation from a parent to a child entity.
+REMOVE - propagates the remove operation from parent to child entity.
+REFRESH - , the child entity also gets reloaded from the database whenever the parent entity is refreshed.
+DETACH - The detach operation removes the entity from the persistent context.
+When we use CascadeType.DETACH, the child entity will also get removed from the persistent context.
+
+Hibernate Cascade types
+REPLICATE - the replicate operation is used when we have more than one data source and we want the data in sync.
+With CascadeType.REPLICATE, a sync operation also propagates to child entities whenever performed on the parent entity.
+SAVE_UPDATE - propagates the same operation to the associated child entity
+LOCK -CascadeType.LOCK reattaches the entity and its associated child entity with the persistent context again.
+
+FetchType.LAZY: It fetches the child entities lazily, that is, at the time of fetching parent entity it 
+just fetches proxy (created by cglib or any other utility) of the child entities and when you access any property 
+of child entity then it is actually fetched by hibernate.
+
+FetchType.EAGER: it fetches the child entities along with parent.
