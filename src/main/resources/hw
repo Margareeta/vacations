@@ -1,8 +1,66 @@
-Протестировать CRUD методы JPA repository
-springDataJpa почитать
+мы на прошлом занятии изменили модели, поэтому
+первым делом снести текущую базу,
+вторым - пересоздать (включая таблицы при помощи хибернейта),
+третим - проверить все тесты,
+четвёртым - проверить всё в постмане
+После вам нужно будет переделать репозитории дао
+после того как пересоздадите таблицы, не забудьте переключить свойство хибера ddl-auto на none
+также мы создали специальный тест-нетест который заполняет базу данными
+после того как создадите таблицы нужно будет удалить файл application.yaml (который в тестах!)
+запустить тесты (в таком случае данные пойдут в рабочую базу)
+Потом восстановить ямлик, и тогда для тестов подключится тестовая база
+и вот тогда можно постман смотреть
+это всё несложные движения, оно быстро делается
+для создания репозитория вам понадобятся классы с буквой Q
+QUser например
+это классы query dsl
+они автогенерируемые
+для этих классов нужна зависимость соответствующая
+и плагин, называется my sema, как то так
 
 
 
+
+https://github.com/maxkizi/userdemo
+
+у нас есть тест дата провайдер, в нём два метода, построить 1 пользователя, построить 2 пользователя
+нужно эти методы переделать:
+1) один метод будет сроить пользователя с отпусками (сейчас так и есть). Нужно изменить его
+- он должен принимать параметр int, этот параметр плюсуем ко всем полям пользователя (кроме отпусков).
+buildUser(19) должен создать пользователя {id: 1, firstName : firstName19,  lastName: lastname19 и тд}
+2) то же самое, что и 1, только у пользователя не должно быть отпусков, т.е как будто пользователь
+ещё не был в отпуске +
+Далее, создать новый тестовый класс+
+в нём должно быть два теста:
+1) перввый тест в цикле сохраняет в базу (через UserService) 50 пользователей с отпусками;
+2) второй тест тоже самое, только пользователей без отпусков - не видно в базе, хотя тест проходит
+сделвть нужно завтра к занятию, ну и  в постмане всё доллжно быть збс
+
+
+
+1) UserShortDto (что убрать? ид или отпуска?) все, кроме userInfo  в swagger, будет возвращаться в методе list() (его не делать)
+2) Сделать методы put(200, 400, 500) +
+post (добавить requestBody(куда его????)), response 200 500) +-
+delete (статус 204), +
+delete all+
+https://starkovden.github.io/step4-paths-object.html
+
+В контроллере сделать delete() и deleteAll()+
+swagger(open API)++
+liquibase+
+
+
+
+Привести в порядок контроллер, сервисы, тесты+ и постман
+Калькулятор передавать 2 числа и действие + 1 приложение
+//до четверга
+
+
+2) Написать коллекцию в postman (get1)
+Post, Put - requestbody,  как оно добавляется в постмене
+что такое query-parameters
+3) тесты к сервису
+4) прочитать про http+ english article
 
 1) Описать отношения между сущностями при помощи аннотаций jpa +
 2) создать, через new applicationContext и запустить main +
@@ -11,24 +69,5 @@ springDataJpa почитать
 3) Read about:
 Hibernate proxy object+
 Hibernate persistance bag (у Сабурова есть) +
-
-Lazy Initialization exception
-https://thorben-janssen.com/lazyinitializationexception/
-(StackOverFlow)
-Hibernate throws the LazyInitializationException when it needs to initialize a lazily fetched association to
-another entity without an active session context. That’s usually the case if you try to use an
-uninitialized association in your client application or web layer.
- 2fix it
-  _________
- Don’t use FetchType.EAGER
- Avoid the Open Session in View anti-pattern
- Don’t use hibernate.enable_lazy_load_no_trans
-
-You initialize all required associations when you load the entity using a LEFT JOIN FETCH clause
-or a @NamedEntityGraph or the EntityGraph API.
-
-You use a DTO (data transfer object = pojo-class) projection instead of entities. DTOs don’t support lazy loading,
-and you need to fetch all required information within your service layer.
-
 
 VacationDao+

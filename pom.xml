@@ -22,10 +22,34 @@
         <spring.boot.version>2.4.2</spring.boot.version>
         <postgres.version>42.2.22</postgres.version>
         <lombok.version>1.18.20</lombok.version>
+        <modelmapper.version>2.4.0</modelmapper.version>
+        <swagger.codegen.plugin.version>3.0.24</swagger.codegen.plugin.version>
+        <swagger-parser.version>2.0.26</swagger-parser.version>
+        <querydsl.version>4.4.0</querydsl.version>
+
+
 
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>${swagger-parser.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -35,6 +59,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -66,6 +97,21 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
 
     </dependencies>
     <build>
@@ -76,8 +122,32 @@
                 <version>${spring.boot.version}</version>
             </plugin>
 
+            <plugin>
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger.codegen.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources-user</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <language>spring</language>
+                            <output>${project.build.directory}/generated-sources/</output>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/user/user.yaml</inputSpec>
+                            <modelPackage>com.vacationsandusers.generated.dto</modelPackage>
+                            <generateApis>false</generateApis>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <generateAdditionalProperties>true</generateAdditionalProperties>
+                                <dateLibrary>java8-localdatetime</dateLibrary>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>

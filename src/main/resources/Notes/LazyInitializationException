@@ -1,0 +1,18 @@
+Lazy Initialization exception
+https://thorben-janssen.com/lazyinitializationexception/
+(StackOverFlow)
+Hibernate throws the LazyInitializationException when it needs to initialize a lazily fetched association to
+another entity without an active session context. That’s usually the case if you try to use an
+uninitialized association in your client application or web layer.
+ 2fix it
+  _________
+ Don’t use FetchType.EAGER
+ Avoid the Open Session in View anti-pattern
+ Don’t use hibernate.enable_lazy_load_no_trans
+
+You initialize all required associations when you load the entity using a LEFT JOIN FETCH clause
+or a @NamedEntityGraph or the EntityGraph API.
+
+You use a DTO (data transfer object = pojo-class) projection instead of entities. DTOs don’t support lazy loading,
+and you need to fetch all required information within your service layer.
+https://blog.scottlogic.com/2020/01/03/rethinking-the-java-dto.html
