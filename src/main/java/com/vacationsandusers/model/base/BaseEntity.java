@@ -18,10 +18,10 @@ public abstract class BaseEntity implements IEntity<Long>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "date created")
+    @Column(name = "date_created")
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @Column(name = "date updated")
+    @Column(name = "date_updated")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

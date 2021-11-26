@@ -12,6 +12,6 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 @MappedSuperclass
 public class BaseDeletedEntity extends BaseEntity implements IDeletedEntity<Long> {
-    @Column(name = "isDeleted")
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 }

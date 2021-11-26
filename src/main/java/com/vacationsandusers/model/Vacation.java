@@ -1,22 +1,18 @@
 package com.vacationsandusers.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vacationsandusers.model.base.BaseDeletedEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"user",  "id"})
 @EqualsAndHashCode
 @Entity
 @Table(name = "vacation")
-public class Vacation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Vacation extends BaseDeletedEntity {
     @Column(name = "date_from")
     private LocalDate dateFrom;
     @Column(name = "date_to")

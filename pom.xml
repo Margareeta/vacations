@@ -26,9 +26,7 @@
         <swagger.codegen.plugin.version>3.0.24</swagger.codegen.plugin.version>
         <swagger-parser.version>2.0.26</swagger-parser.version>
         <querydsl.version>4.4.0</querydsl.version>
-
-
-
+        <apt-plugin.version>1.1.3</apt-plugin.version>
     </properties>
 
     <dependencies>
@@ -39,10 +37,15 @@
         </dependency>
 
         <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.modelmapper</groupId>
@@ -65,7 +68,6 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -90,6 +92,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -111,8 +114,6 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
-
-
     </dependencies>
     <build>
         <plugins>
@@ -147,6 +148,31 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>${apt-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/src/main/generated-sources</outputDirectory>
+                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.querydsl</groupId>
+                        <artifactId>querydsl-apt</artifactId>
+                        <version>${querydsl.version}</version>
+                        <classifier>jpa</classifier>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

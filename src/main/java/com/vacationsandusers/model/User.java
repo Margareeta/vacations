@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder(toBuilder = true)
+@SuperBuilder
 @ToString(exclude = "id")
 @Entity
 @Table(name = "users")
-public class User extends BaseDeletedEntity {
+public class User extends BaseDeletedEntity{
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -22,7 +22,7 @@ public class User extends BaseDeletedEntity {
     @Column(name = "email")
     private String email;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)//mappedBy
-    private List<Vacation> usersVacations;//persistant bag implements list, can connect to a session*,
+    private List<Vacation> usersVacations;//persistent bag implements list, can connect to a session*,
     // is also a proxy
 
 }

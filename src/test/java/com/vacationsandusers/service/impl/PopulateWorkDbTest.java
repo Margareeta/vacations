@@ -3,6 +3,7 @@ package com.vacationsandusers.service.impl;
 import com.vacationsandusers.model.User;
 import com.vacationsandusers.service.impl.Helper.TestDataProvider;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -30,4 +31,6 @@ public class PopulateWorkDbTest {
             userService.create(user);
         }
     }
+    @Test
+    void emptyTest(){}
 }
