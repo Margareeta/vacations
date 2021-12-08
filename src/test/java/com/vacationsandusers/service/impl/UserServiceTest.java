@@ -2,6 +2,8 @@ package com.vacationsandusers.service.impl;
 
 import com.vacationsandusers.model.User;
 import com.vacationsandusers.model.Vacation;
+import com.vacationsandusers.model.base.BaseDeletedEntity;
+import com.vacationsandusers.model.base.IDeletedEntity;
 import com.vacationsandusers.service.impl.Helper.TestDataProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.Serializable;
 
 @SpringBootTest
 class UserServiceTest {
@@ -88,5 +92,6 @@ class UserServiceTest {
         int size = userService.list().size();
         Assertions.assertEquals(0, size);
     }
+
 
 }
