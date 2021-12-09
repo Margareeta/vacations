@@ -28,7 +28,6 @@ public class UserController {
         // /api/v1/users/1
     }
 
-    //из дто сделать модель, отправить ее в сервис и превратить ее в дто
     @PostMapping("/users")
     public UserDto createUser(@RequestBody UserDto userDto) {
         User user = converter.fromDto(userDto);
@@ -45,11 +44,7 @@ public class UserController {
     }
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable(name ="id") Long id){
-        service.delete(id);
+        service.deleteById(id);
     }
 
-    @DeleteMapping("/users")
-    public void deleteAll(){
-        service.deleteAll();
-    }
 }

@@ -18,50 +18,47 @@ public abstract class AbstractBaseService
 
     public abstract R getRepository();
 
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public Optional<T> get(I id) {
         return getRepository().findById(id);
     }
-
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public Optional<T> get(Predicate predicate) {
         return getRepository().findOne(predicate);
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public Page<T> findAll(Predicate predicate, Pageable pageable) {
         return getRepository().findAll(predicate, pageable);
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public List<T> findAll() {
         return getRepository().findAll();
     }
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public T save(T t) {
         return getRepository().save(t);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void delete(T t) {
         getRepository().delete(t);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor= Exception.class)
-    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void delete(I id) {
         getRepository().deleteById(id);
-
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor= Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public boolean isExistent(I id) {
         return getRepository().existsById(id);

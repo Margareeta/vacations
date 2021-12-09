@@ -3,8 +3,6 @@ package com.vacationsandusers.service;
 import com.vacationsandusers.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-
 public interface IUserService {
     Page<User> list(Pageable pageable, String search);
 
@@ -14,5 +12,6 @@ public interface IUserService {
 
     User update(User user, Long id);
 
-    void delete(Long id);
+    void deleteById(Long id);
 }
+
