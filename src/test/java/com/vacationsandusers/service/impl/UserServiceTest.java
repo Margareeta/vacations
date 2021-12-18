@@ -1,91 +1,51 @@
 package com.vacationsandusers.service.impl;
 
+import com.vacationsandusers.BaseIntegrationTest;
 import com.vacationsandusers.model.User;
-import com.vacationsandusers.model.Vacation;
+import com.vacationsandusers.service.IUserService;
 import com.vacationsandusers.service.impl.Helper.TestDataProvider;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class UserServiceTest {
+
+class UserServiceTest extends BaseIntegrationTest {
+
+    private final IUserService service;
+    private final TestDataProvider provider;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private TestDataProvider provider;
-    private Long id1;
-
-    @AfterEach
-    void deleteTestData() {
-        userService.deleteAll();
+    public UserServiceTest(IUserService service, TestDataProvider provider) {
+        this.service = service;
+        this.provider = provider;
     }
-
+//creates and searches different users. why?
     @Test
-    void userListTest() {
-        User user1 = provider.buildUser1(1);
-        User user2 = provider.buildUser2(2);
-        userService.create(user1);
-        userService.create(user2);
-        Assertions.assertEquals(2, userService.list().size());
+    void shouldCreateAndFindById(){
+        User createdUser = service.create(provider.buildFullUser(1));
+        User foundUser = service.findById(createdUser.getId());
+
+
+        Assertions.assertEquals(createdUser, foundUser);
     }
-
+    //doesn't delete the user I create. Why?
     @Test
-    void createAndFindByIdUserTest() {
-        User user = provider.buildUser1(1);
-        id1 = userService.create(user).getId();
-        User byId = userService.findById(id1);
-        user.setId(id1);
-        for (int i = 0; i < user.getUsersVacations().size(); i++) {
-            Vacation expected = user.getUsersVacations().get(i);
-            Vacation actual = byId.getUsersVacations().get(i);
-            Assertions.assertEquals(expected.getDateFrom(), actual.getDateFrom());
-            Assertions.assertEquals(expected.getDateTo(), actual.getDateTo());
-        }
-        Assertions.assertEquals(user.getFirstName(), byId.getFirstName());
-        Assertions.assertEquals(user.getLastName(), byId.getLastName());
-        Assertions.assertEquals(user.getEmail(), byId.getEmail());
+    void shouldDeleteUserById(){
+        User createdUser = service.create(provider.buildFullUser(2));
+        service.deleteById(createdUser.getId());
 
+        Assertions.assertEquals(true, createdUser.isDeleted());
     }
-
     @Test
-    void updateUserTest() {
-        User user = provider.buildUser1(1);
-        id1 = userService.create(user).getId();
-        User updated = userService.update(user, id1);
-        for (int i = 0; i < user.getUsersVacations().size(); i++) {
-            Vacation expected = user.getUsersVacations().get(i);
-            Vacation actual = updated.getUsersVacations().get(i);
-            Assertions.assertEquals(expected.getDateFrom(), actual.getDateFrom());
-            Assertions.assertEquals(expected.getDateTo(), actual.getDateTo());
-        }
+    void shouldUpdateUserById(){
+        User createdUser = service.create(provider.buildFullUser(3));
+        createdUser.setFirstName("Jane");
+        createdUser.setLastName("Doe");
+        User updatedUser = service.update(createdUser, createdUser.getId());
 
-        Assertions.assertEquals(user.getFirstName(), updated.getFirstName());
-        Assertions.assertEquals(user.getLastName(), updated.getLastName());
-        Assertions.assertEquals(user.getEmail(), updated.getEmail());
-    }
+        Assertions.assertEquals("Jane", updatedUser.getFirstName());
+        Assertions.assertEquals("Doe", updatedUser.getLastName());
 
-    @Test
-    void deleteUserTest() {
-
-        User user = provider.buildUser1(1);
-        id1 = userService.create(user).getId();
-        int size = userService.list().size();
-        userService.deleteById(id1);
-        int reducedSize = userService.list().size();
-        Assertions.assertEquals(size - 1, reducedSize);
-    }
-
-    @Test
-    void deleteAllUsersTest() {
-        User user = provider.buildUser1(1);
-        User user1 = provider.buildUser2(2);
-        userService.create(user);
-        userService.create(user1);
-        userService.deleteAll();
-        int size = userService.list().size();
-        Assertions.assertEquals(0, size);
     }
 
 

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @ToString(exclude = {"user",  "id"})
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "vacation")
 public class Vacation extends BaseDeletedEntity {

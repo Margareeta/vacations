@@ -19,7 +19,7 @@ public class PopulateWorkDbTest {
     void addUsersWithVacationsTest(){
 
         for (int i = 1; i <= 25; i++) {
-            User user = provider.buildUser1(i);
+            User user = provider.buildFullUser(i);
             userService.create(user);
         }
     }
@@ -27,7 +27,7 @@ public class PopulateWorkDbTest {
     @org.junit.jupiter.api.Test
     void addUserNoVacationsTest(){
         for (int i = 26; i <= 50; i++) {
-            User user = provider.buildUser2(i);
+            User user = provider.buildUser(i);
             userService.create(user);
         }
     }

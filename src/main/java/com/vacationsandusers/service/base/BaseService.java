@@ -26,6 +26,4 @@ public interface BaseService<T extends IEntity<I>, I extends Serializable> {
 
     boolean isExistent(I id);
 
-
-
 }

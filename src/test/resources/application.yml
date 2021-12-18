@@ -1,16 +1,22 @@
+server:
+  port: 7777
+  error:
+    include-message: always
+    include-binding-errors: always
+
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/vacations
-#    username: postgres
-#    password: 111
-#    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/vacations
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 111
   jpa:
-    show-sql: true
     hibernate:
-      fromat-sql: true
-      ddl-auto: create
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+#  liquibase:
+#    change-log: classpath:/db/liquibase-changelog.xml
+
+
+
